@@ -130,10 +130,15 @@ def LogIn(nameLD, phoneNumber):
     if check == False:
         return False
 
+    # call otp
     print(colored("Cho doc otp", "blue"))
     otp = CallOtp(phoneNumber)
-    # call otp
     ld.sendText(nameLD, otp)  # Gui otp
+
+    # bị dính màn hình google
+    check_email = tess.get_text_positions("Google", GetScreenShot(nameLD))
+    if check_email is not None:
+        return False
 
     # cho nhap ma 2fa
     Click_Text(nameLD, "Verification")

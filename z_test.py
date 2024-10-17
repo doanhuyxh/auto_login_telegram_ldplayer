@@ -6,7 +6,7 @@ import libs.tesseract as tess
 
 nameLD= "Telegram"
 #ld.pressKey(nameLD, "KEYCODE_APP_SWITCH")
-ld.pressKey(nameLD, "KEYCODE_HOME")
+#ld.pressKey(nameLD, "KEYCODE_HOME")
 # ld.copyLD(nameLD, "goc")
 # ld.modLD(nameLD)
 
@@ -18,8 +18,8 @@ ld.takeScreen(nameLD)
 ld.getScreen(nameLD)
 image_path = os.path.dirname(os.path.abspath(__file__))+"\\libs\\temp\\"+nameLD+".png"
 print(tess.ocr_image("./temp/"+nameLD+".png"))
-# pos = tess.get_text_positions("XOA", "./temp/"+nameLD+".png")
-# print(pos)
+pos = tess.get_text_positions("Google", "./temp/"+nameLD+".png")
+print(pos)
 # x,y = pos
 # ld.click(nameLD, x,y)
 
