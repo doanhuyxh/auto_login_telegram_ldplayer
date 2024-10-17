@@ -41,9 +41,12 @@ def ClearMultitasking(nameLD):
 
 def CallOtp(phone):
     otp = None
-    res = requests.get(f"http://192.168.105.249:5000/api/get_otp?phone_number={phone}")
-    data = res.json()
-    otp = data.get("data")
+    try:
+        res = requests.get(f"http://192.168.105.249:5000/api/get_otp?phone_number={phone}")
+        data = res.json()
+        otp = data.get("data")
+    except Exception as ex:
+        print(colored(f"Can not get otp: {ex}", "red"))
     return otp
 
 
@@ -138,6 +141,8 @@ def LogIn(nameLD, phoneNumber):
     # bị dính màn hình google
     check_email = tess.get_text_positions("Google", GetScreenShot(nameLD))
     if check_email is not None:
+        with open("error.txt", "a") as f:
+            f.write(f"{phoneNumber} -- Bị dính email\n")
         return False
 
     # cho nhap ma 2fa
@@ -160,6 +165,7 @@ with open("phone_number.txt", "r") as f:
     phone_number = f.readlines()
 
     for phone in phone_number:
+        ClearMultitasking(nameLD)
         ld.pressKey(nameLD, "KEYCODE_HOME")
         phone = phone.strip()
         print(f"Log in {phone}")
@@ -169,4 +175,4 @@ with open("phone_number.txt", "r") as f:
             print(f"Can not find {phone}")
             with open("error.txt", "a") as f:
                 f.write(f"{phone}\n")
-        ClearMultitasking(nameLD)
+        
